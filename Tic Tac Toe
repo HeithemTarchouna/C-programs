@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
+int map[3][3];
+
+void main(){
+int i=0;
+startGame();
+affiche();
+for(i=0;i<9;i++){
+    saisie(map,i);
+    if(gameEnd()){
+        printf("\n player %d gange ! jeux termine !!",(i%2)+1);
+        break;
+        }
+
+    }
+    if (i==9)
+printf("Partie Nulle");
+}
+void affiche(){
+int i,j;
+system("cls");
+for(i=0;i<3;i++){
+    printf("\n|");
+    for(j=0;j<3;j++){
+        if (map[i][j]==5) printf(" |");
+        if (map[i][j]==0) printf("x|");
+        if (map[i][j]==1) printf("o|");
+        }
+        printf("\n|-|-|-|");
+}
+printf("\n");
+}
+
+void startGame(){
+int i,j;
+for(i=0;i<3;i++){
+    for(j=0;j<3;j++){
+        map[i][j]=5;
+        }
+    }
+
+}
+
+void saisie(int map[3][3],int m){
+int i,j;
+do{
+
+printf("player %d\n donner la ligne= ",(m%2)+1);
+scanf("%d",&i);
+printf("donner la colonne= ");
+scanf("%d",&j);}
+while(verif(map,i,j)!=1);
+if (m%2==0){
+    map[i-1][j-1]=0;
+    }
+    else {
+    map[i-1][j-1]=1;
+    }
+affiche();
+
+}
+
+int verif(int map[3][3],int i,int j){
+    return (map[i-1][j-1]==5);
+    }
+
+
+int gameEnd(int map[3][3]){
+if (map[0][0]==map[0][1]&map[0][0]== map[0][2]&map[0][0]!=5)return 1;
+    else if (map[0][2]==map[1][1]&map[0][2]==map[2][0]&map[0][2]!=5)return 1;
+    else if (map[0][0]==map[1][0]&map[0][0]==map[2][0]&map[0][0]!=5)return 1;
+    else if (map[0][1]==map[1][1]&map[0][1]==map[2][1]&map[0][1]!=5)return 1;
+    else if (map[0][2]==map[1][2]&map[0][2]==map[2][2]&map[0][2]!=5)return 1;
+    else if (map[0][0]==map[0][1]&map[0][0]==map[0][2]&map[0][0]!=5)return 1;
+    else if (map[1][0]==map[1][1]&map[1][0]==map[1][2]&map[1][0]!=5)return 1;
+    else if (map[2][0]==map[2][1]&map[2][0]==map[2][2]&map[2][0]!=5)return 1;
+
+
+}
+
