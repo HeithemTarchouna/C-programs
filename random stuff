@@ -1,0 +1,72 @@
+//man.c
+#include <stdio.h>
+#include <string.h>
+#include "stack.h"
+
+void main(){
+Stack sta=new_stack();
+sta=push_stack(sta,28);
+//sta=push_stack(sta,25);
+
+printf("%d",sta->value);
+}
+
+//stack.c
+#include <stdio.h>
+#include <stdlib.h>
+#include "stack.h"
+
+Stack new_stack(void){
+return NULL;
+}
+/*-----------------------------------------------*/
+Bool is_empty_stack(Stack st){
+return (st==NULL);//if (st==null) return true;
+}
+/*-----------------------------------------------*/
+
+Stack push_stack(Stack st,int x){
+StackElement* element;
+element=malloc(sizeof(*element));
+if (st==NULL){
+    fprintf(stderr,"problem allocation dynamique");
+    exit(EXIT_FAILURE);
+}
+element->value=x;
+element->next=st;
+return element;
+}
+/*-----------------------------------------------*/
+
+Stack clear_stack(Stack st){
+if (st==NULL) return new_stack();
+stack element;
+element=st;
+clear(st);
+return clear_stack(element);
+
+}
+
+
+//stack.h
+#ifndef __STACK__H__
+#define __STACK__H__
+
+//creation d'un type booleen
+typedef enum{
+false,//0
+true//1
+}Bool;
+ //defintion d'une pile
+ typedef struct StackElement{
+int value;
+struct StackElement *next;
+ }StackElement,*Stack;
+//prototype des fonction de pile
+Stack new_stack(void);
+Bool is_empty_stack(Stack st);
+Stack push_stack(Stack st,int x);
+Stack clear_stack(Stack st);
+
+
+#endif // __STACK__H__
