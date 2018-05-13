@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+    char nickname[15];
+    int level;
+}player;
+
+
+typedef struct{
+    char clanName[15];
+    player *members;
+int roster;
+}clan;
+
+
+void create_clan(clan *c){
+    printf("Donner le nom du clan = ");
+    scanf("%s",c->clanName);
+    printf("Donner le nombre des joueurs du clan = ");
+    scanf("%d",&(c->roster));
+    c->members=malloc(c->roster*sizeof(clan));
+    printf("\n **Ajout des membres** \n");
+    for(int i=0;i<c->roster;i++){
+        printf("dooner le nom du joueur %d= ",i+1);
+        scanf("%s",c->members[i].nickname);
+        printf("dooner le niveau du joueur %d= ",i+1);
+        scanf("%d",&(c->members[i].level));
+
+    }
+
+}
+void print_clan(clan c){
+    printf("**Affichage du clan %s**",c.clanName);
+    for(int i=0;i<c.roster;i++){
+          printf("\n Player %d  ",i+1);
+          printf("\n nickname : %s",c.members[i].nickname);
+        printf("\n Level:%d \n ",c.members[i].level);
+
+
+
+
+    }
+
+}
+
+void main(){
+clan ism;
+create_clan(&ism);
+print_clan(ism);
+
+
+
+}
