@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct item{
+    char value;
+    struct item* next;
+}item;
+
+typedef struct{
+    item *top;
+}stack;
+
+item* push_item(item* head,char val){
+    item *temp=(item*)malloc(sizeof(item));
+    temp->value=val;
+    temp->next=head;
+    head=temp;
+    return head;
+}
+void push(stack*a,char val){
+    a->top=push_item(a->top,val);
+}
+void print_stack(stack a){
+    while(a.top!=NULL){
+        printf("%c",(a.top)->value);
+        a.top = a.top->next;
+    }
+}
+char top(stack a){
+return a.top->value;
+}
+item* pop_item(item* head){
+    if( head==NULL){
+        printf("Stack is Empty");
+        return head;
+    }
+    else{
+        item *toDel=head;
+        head=head->next;
+        free(toDel);
+
+    }
+    return head;
+}
+void pop(stack *a){
+    if (a!=NULL){
+        a->top=pop_item(a->top);
+    }
+}
+
+
+void main(){
+    stack a;
+    int i;
+    a.top=NULL;
+    char st[10];
+    printf("Dooner la chaine= ");
+    scanf("%s",st);
+    for(i=0;i<strlen(st);i++){
+        push(&a,st[i]);
+    }
+    strcpy(st,"");
+    for(int b=0;b<i;b++){
+     st[b]=top(a);
+     pop(&a);
+    }
+    printf("%s",st);
+}
