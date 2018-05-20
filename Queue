@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node{
+    struct node* next;
+    int value;
+}node;
+
+
+typedef struct{
+ node* front;
+ node* rear;
+}Queue;
+
+void push_queue(Queue *Q,int x){
+    if(Q->front==NULL & Q->rear==NULL){
+        node* temp=(node*)malloc(sizeof(node));
+        temp->next=NULL;
+        temp->value=x;
+        Q->rear=temp;
+        Q->front=Q->rear;
+    }
+    else{
+        node *temp=(node*)malloc(sizeof(node));
+        temp->value=x;
+        temp->next=Q->rear;
+        Q->rear=temp;
+    }
+
+}
+
+void pop_queue(Queue *Q){
+        node *temp = Q->front;
+
+    if(Q == NULL){
+        printf("\n le file n'existe pas \n");
+    }
+    else if(Q->front == NULL){
+        printf("\n Vide \n");
+    }
+    else if(Q->front == Q->rear){
+        Q->front=NULL;
+        Q->rear=NULL;
+    }
+    else{
+    Q->front = Q->front->next;
+    }
+    free(temp);
+
+
+
+}
+
+void print_Q(Queue Q){
+    node* temp =  Q.front;
+    while(temp!=NULL){
+        printf("%d ",temp->value);
+        temp=temp->next;
+    }
+}
+
+    Queue Classe;
+
+void main(){
+    Classe.front=NULL;
+    Classe.rear=NULL;
+    push_queue(&Classe,1);
+    push_queue(&Classe,2);
+    print_Q(Classe);
+    pop_queue(&Classe);
+
+    print_Q(Classe);
+
+
+
+}
