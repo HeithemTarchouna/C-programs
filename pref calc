@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct node{
+    int value;
+    struct node* next;
+}node;
+
+node* push_item(node* head,int val){
+    node* temp = (node*)malloc(sizeof(node));
+    temp->value = val;
+    temp->next = head;
+    head = temp;
+    return head;
+}
+
+node* pop_item(node* head){
+    if( head==NULL){
+        printf("Stack is Empty");
+        return head;
+    }
+    else{
+        node *toDel=head;
+        head=head->next;
+        free(toDel);
+
+    }
+    return head;
+}
+
+
+void calcul_pref(char a[]){
+    node *pile=(node*)sizeof(node);
+    int temp1;
+    int temp2;
+    int i=0;
+    for(i=strlen(a)-1 ; i>-1; i--){
+        if (a[i] == '+'){
+            temp1 = pile->value;
+            pile = pop_item(pile);
+            temp2 = pile->value;
+            pile = pop_item(pile);
+            temp1=temp1+temp2;
+            pile = push_item(pile,temp1);
+        }
+      else if (a[i] == '-'){
+            temp1 = pile->value;
+            pile = pop_item(pile);
+            temp2 = pile->value;
+            pile = pop_item(pile);
+            temp1=temp1-temp2;
+            pile = push_item(pile,temp1);
+        }
+         else if (a[i] == '*'){
+            temp1 = pile->value;
+            pile = pop_item(pile);
+            temp2 = pile->value;
+            pile = pop_item(pile);
+            temp1=temp1*temp2;
+            pile = push_item(pile,temp1);
+        }
+    else{
+        int temp = a[i]-48;
+        pile=push_item(pile,temp);
+        }
+    }
+printf("%d",pile->value);
+}
+
+
+void main(){
+    calcul_pref("-+*23+549");
+    //postfix(in);
+
+}
