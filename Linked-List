@@ -1,0 +1,141 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node{
+    int value;
+    struct node* next;
+}node;
+typedef struct{
+    node* head;
+    int size;
+}List;
+List new_list(List* l){
+    l->head=NULL;
+    l->size=0;
+    return (*l);
+}
+void print_List(List L){
+    while(L.head!=NULL){
+        printf("%d",L.head->value);
+        L.head=L.head->next;
+    }
+}
+void push_first(List*l,int val){
+    node*temp=(node*)malloc(sizeof(node));
+    temp->value=val;
+    temp->next=l->head;
+    l->head=temp;
+    (l->size)++;
+}
+void push_last(List*l,int val){
+    node*temp=(node*)malloc(sizeof(node));
+    if (l->head==NULL){
+        temp->value=val;
+        temp->next=NULL;
+        l->head=temp;
+        (l->size)++;
+
+    }
+    else{
+        node*compt=l->head;
+        while(compt->next!=NULL){
+            compt=compt->next;
+        }
+        temp->value=val;
+        temp->next=NULL;
+        compt->next=temp;
+        (l->size)++;
+
+    }
+
+
+}
+void push_nth(List*l,int val,int pos){
+    node*temp = (node*)malloc(sizeof(node));
+    if (pos==1 || l->head==NULL){
+        temp->value=val;
+        temp->next=l->head;
+        l->head=temp;
+    }
+    else{
+        int contPos=1;
+        node* cont=l->head;
+        while(cont->next!=NULL&&contPos<pos-1){
+            contPos++;
+            cont=cont->next;
+        }
+    temp->next=cont->next;
+    temp->value=val;
+    cont->next=temp;
+
+    }
+}
+void pop_first(List*l){
+    node* toDel=(node*)malloc(sizeof(node));
+    if (l->head==NULL){
+        printf("\n The list is empty \n");
+    }
+    else{
+        toDel=l->head;
+        l->head=l->head->next;
+        free(toDel);
+    }
+
+}
+void pop_last(List *l){
+    if (l->head==NULL){
+        printf("\n it's empty \n");
+    }
+    else if(l->head->next==NULL){
+        l->head=NULL;
+    }
+    else{
+        node* cont = l->head;
+        while(cont->next->next!=NULL){
+            cont=cont->next;
+        }
+        free(cont->next);
+        cont->next=NULL;
+
+    }
+}
+void pop_nth(List*l,int pos){
+    if (l->head==NULL){
+        printf("it's empty");
+    }
+    else if(pos==1 || l->head->next==NULL){
+        node*toDel=l->head;
+        l->head=l->head->next;
+        free(toDel);
+    }
+    else{
+        int contPos=1;
+        node* cont=l->head;
+        while(contPos<pos-1 && cont->next->next!=NULL){
+            contPos++;
+            cont=cont->next;
+        }
+        node* toDel=cont->next;
+        cont->next=toDel->next;
+        free(toDel);
+    }
+
+}
+int isEmpty(List l){
+    return (l.head==NULL);
+}
+node* top(List l){
+    return(l.head);
+}
+
+void main(){
+    List l=new_list(&l);
+    push_nth(&l,1,1);
+    push_nth(&l,2,1);
+    push_nth(&l,3,1);
+    push_nth(&l,6,3);
+    pop_nth(&l,5);
+
+
+    print_List(l);
+}
