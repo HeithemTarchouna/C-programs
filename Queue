@@ -1,76 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct node{
-    struct node* next;
     int value;
+    struct node* next;
 }node;
 
-
 typedef struct{
- node* front;
- node* rear;
-}Queue;
+    node* front;
+    node* tail;
+}Qu;
 
-void push_queue(Queue *Q,int x){
-    if(Q->front==NULL & Q->rear==NULL){
-        node* temp=(node*)malloc(sizeof(node));
-        temp->next=NULL;
-        temp->value=x;
-        Q->rear=temp;
-        Q->front=Q->rear;
+void pushQ(Qu*f,int val){
+    node* temp=(node*)malloc(sizeof(node));
+    temp->value=val;
+    temp->next=NULL;
+    if (f->front == f->tail && f->front==NULL){
+        f->front=temp;
+        f->tail=temp;
     }
     else{
-        node *temp=(node*)malloc(sizeof(node));
-        temp->value=x;
-        temp->next=Q->rear;
-        Q->rear=temp;
+        f->tail->next=temp;
+        f->tail=temp;
     }
-
 }
-
-void pop_queue(Queue *Q){
-        node *temp = Q->front;
-
-    if(Q == NULL){
-        printf("\n le file n'existe pas \n");
+void printQ(Qu f){
+    while(f.front!=NULL){
+        printf(" %d ",f.front->value);
+        f.front=f.front->next;
     }
-    else if(Q->front == NULL){
-        printf("\n Vide \n");
+}
+void popQ(Qu*f){
+    if (f->front==f->tail&&f->front==NULL){
+        printf("La liste est vide!");
     }
-    else if(Q->front == Q->rear){
-        Q->front=NULL;
-        Q->rear=NULL;
+    else if(f->front==f->tail&&f->tail!=NULL){
+        f->front=NULL;
+        f->tail=NULL;
     }
     else{
-    Q->front = Q->front->next;
+        node*toDel=f->front;
+        f->front=f->front->next;
+        free(toDel);
     }
-    free(temp);
-
-
 
 }
-
-void print_Q(Queue Q){
-    node* temp =  Q.front;
-    while(temp!=NULL){
-        printf("%d ",temp->value);
-        temp=temp->next;
-    }
-}
-
-    Queue Classe;
 
 void main(){
-    Classe.front=NULL;
-    Classe.rear=NULL;
-    push_queue(&Classe,1);
-    push_queue(&Classe,2);
-    print_Q(Classe);
-    pop_queue(&Classe);
+    Qu f;
+    f.front=NULL;
+    f.tail=NULL;
+    pushQ(&f,1);
+    pushQ(&f,2);
+    pushQ(&f,3);
+    pushQ(&f,4);
+    popQ(&f);
 
-    print_Q(Classe);
 
-
+    printQ(f);
 
 }
